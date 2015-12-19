@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import argparse, json, urllib2, random
 from pprint import pprint
-UID=1284682175
 ARTIST="artist"
 ALBUM="album"
 SONG="track"
