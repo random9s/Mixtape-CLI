@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import argparse, json, urllib2, random
+import argparse, json, webbrowser, urllib2, random
 from pprint import pprint
 ARTIST="artist"
 ALBUM="album"
@@ -23,17 +23,37 @@ def get_artist():
         items = data['artists']['items']
     name = items[0]['name']
     aid = items[0]['id']
-
+    name.lstrip()
+    aid.lstrip()
+    print "You should check out the artist: '%s'" %name
 
 def get_album():
-    None
-    #items = []
-    #url = create_query(ALBUM)
+    items = []
+    album = []
+    while not items:
+        url = create_query(ALBUM)
+        response = urllib2.urlopen(url)
+        data = json.load(response)
+        items = data['albums']['items']
+    name = items[0]['name']
+    print "You should check out the album: '%s'" %name
 
 def get_song():
     None
-    #items = []
-    #url = create_query(SONG)
+    items = []
+    tracks = []
+    while not items:
+        url = create_query(SONG)
+        response = urllib2.urlopen(url)
+        data = json.load(response)
+        items = data['tracks']['items']
+    name = items[0]['name']
+    prev_url = items[0]['preview_url']
+    print "Would you like to listen to a preview of '%s'" %name
+    print "[Y/N]:",
+    opt = raw_input()
+    if opt.lower() == 'y':
+        webbrowser.open(prev_url)
 
 def create_query(item):
     alphabet="abcdefghijklmnopqrstuvwxyz"
